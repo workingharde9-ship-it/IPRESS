@@ -1,0 +1,7 @@
+.pages-application-handoff{margin-top:30px;padding-top:30px;border-top:1px solid var(--line,#dce2df)}
+.pages-application-handoff h4{font:700 clamp(24px,3vw,36px)/1.15 Space,sans-serif;letter-spacing:-.04em;margin:18px 0}
+.pages-application-handoff>p{line-height:1.7;color:var(--muted,#59655f);max-width:58ch}
+.pages-application-handoff .primary-button{margin:14px 0;max-width:100%;box-sizing:border-box;white-space:normal}
+.pages-access-note{padding:18px 20px;border-left:3px solid var(--green,#16b47c);background:#f2f8f3;font-size:13px}.pages-access-note strong{display:block;color:#19382c}
+#interest-explorer .creative-fields{margin-top:25px}
+@media(max-width:480px){.pages-application-handoff .primary-button{width:100%;font-size:12px}}

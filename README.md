@@ -13,34 +13,35 @@ This is the upload-ready static IPRESS website. No npm installation or build is 
 
 All local paths are relative, so both a project URL (`/ipress/`) and a user-site URL (`/`) work. The included `.nojekyll` avoids unnecessary Jekyll processing. If your upload interface omits it, create an empty file with that name in the repository root.
 
-## Recruitment: understand this before inviting applicants
+## Recruitment form (hosted on this site, submissions sent to Gmail)
 
-**GitHub Pages hosts static websites; it cannot run the existing server or database.** This export therefore links visitors to the real application form at:
+The application form now lives on the page itself (`#apply` → "Ouvrir le formulaire sécurisé"). No redirect, no ChatGPT login. Each submission is emailed privately to the site owner through **Web3Forms**, a free form-to-email service that works with static hosting.
 
-https://ipress-universe.briny-tern-7089.chatgpt.site/#apply
+### One-time activation (about 2 minutes)
 
-The administrator link also points to the existing protected administration page. No applicant data, administrator identities, database, secret, or authentication credential is bundled in this export. The GitHub page does not collect personal details or display a fake successful submission. The six exploratory interest choices stay in the page and are not sent; applicants confirm them in the hosted form.
+1. Go to https://web3forms.com, enter your Gmail address under "Create your Access Key", and confirm the email you receive.
+2. Copy the access key you receive (a UUID).
+3. In `index.html`, find `data-access-key="REMPLACE_PAR_TA_CLE_WEB3FORMS"` on the `<form id="application-form">` tag and replace the placeholder with your key.
+4. Commit the change on GitHub. Submit a test application; it should arrive in your inbox within a minute.
 
-**The existing application site was owner-private when this package was prepared.** Students cannot submit there until its audience is opened. The visible notice “Ouverture aux étudiants en préparation” reflects that state.
+Until the key is set, the form validates the input but shows "Le formulaire n'est pas encore activé" instead of sending.
 
-To keep the existing working application system:
+### Privacy notes
 
-1. Ask the site owner to make the existing IPRESS application Site public. This is a separate access change; publishing GitHub Pages does not change it.
-2. Verify as an ordinary student that the form is accessible and saves a real application, and that the administrator page stays restricted.
-3. Once this succeeds, remove the paragraph with class `pages-access-note` from `index.html` and commit that edit.
-
-Applicants sign in with ChatGPT for this existing form. The backend is hosted by ChatGPT Sites; its availability and pricing are separate from GitHub Pages. If you want to remove this dependency, the form needs a separate backend and an authentication migration before switching its links. GitHub Pages alone cannot replace it. Do not publish secret keys or personal application data in a GitHub repository.
-
-Joining the WhatsApp group remains available independently and does not mean acceptance as an official club member.
+- The access key is not a password: it can only *send* email to you. It cannot read anything. Nobody (applicants included) can see other applicants' entries, since nothing is stored on the site.
+- Submissions pass through Web3Forms' servers on their way to your inbox.
+- A hidden honeypot field filters most bots. If spam appears, enable the captcha/domain options in your Web3Forms dashboard.
+- Applications sent through the old ChatGPT-hosted form stay in that old project.
 
 ## What to edit
 
-- `index.html`: page copy, recruitment link, administration link and opening notice.
+- `index.html`: page copy, application form markup (and access key), team-area link.
 - `styles.css`, `recruitment.css`, `pages.css`: appearance.
 - `app.js`: interactions and exact seven-member order.
 - `scene.js`: 3D camera.
-- `recruitment.js`: interest explorer; no submission API.
-- `assets/`: club imagery and local fonts.
+- `recruitment.js`: interest explorer.
+- `application.js`: inline application form (validation + Web3Forms submission).
+- `assets/`: club imagery and local fonts (`art-*.jpg` = photos of the "Des idées plein la tête" explorer).
 - `vendor/`: self-hosted Three.js.
 
 The original server-backed Site has not been changed by this export. Keep that project as the source of the working database and administration system.

@@ -123,7 +123,7 @@ selectMember(0,false);
 
 const lightbox=$('#lightbox');let photoIndex=0;let lastDialogTrigger=null;
 function openDialog(dialog,trigger){lastDialogTrigger=trigger||document.activeElement;dialog.showModal();document.body.classList.add('modal-open')}
-function updatePhoto(index){photoIndex=(index+photos.length)%photos.length;const photo=photos[photoIndex];$('#lightbox-image').src=photo.src;$('#lightbox-image').alt=photo.alt;$('#lightbox-caption').textContent=photo.caption;$('#lightbox-counter').textContent=`0${photoIndex+1} / 06`}
+function updatePhoto(index){photoIndex=(index+photos.length)%photos.length;const photo=photos[photoIndex];$('#lightbox-image').src=photo.src;$('#lightbox-image').alt=photo.alt;$('#lightbox-caption').textContent=photo.caption;$('#lightbox-counter').textContent=`${String(photoIndex+1).padStart(2,'0')} / ${String(photos.length).padStart(2,'0')}`}
 function openPhoto(index,trigger){updatePhoto(index);openDialog(lightbox,trigger)}
 $$('[data-photo]').forEach(button=>button.addEventListener('click',()=>openPhoto(Number(button.dataset.photo),button)));
 $('#photo-prev').addEventListener('click',()=>updatePhoto(photoIndex-1));$('#photo-next').addEventListener('click',()=>updatePhoto(photoIndex+1));

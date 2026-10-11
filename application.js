@@ -71,6 +71,7 @@
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
+    if (submit.disabled) return;
     showStatus('');
     if (!validate()) return;
 
@@ -100,6 +101,7 @@
     if (form.elements.email.value.trim()) payload.replyto = form.elements.email.value.trim();
 
     submit.disabled = true;
+    form.setAttribute('aria-busy', 'true');
     const original = label.textContent;
     label.textContent = 'Envoi en cours…';
     try {
@@ -109,16 +111,38 @@
         body: JSON.stringify(payload)
       });
       const result = await response.json().catch(() => ({}));
-      if (!response.ok || !result.success) throw new Error(result.message || 'send-failed');
+      if (!response.ok || result.success !== true) throw new Error(result.message || 'send-failed');
+      // Only a confirmed server success reaches this presentation step.
       const box = document.createElement('div');
-      box.className = 'application-success';
-      box.setAttribute('role', 'status');
-      box.innerHTML = '<strong>Merci, ta candidature est envoyée.</strong><p>L’équipe IPRESS va découvrir ton profil et te contactera sur WhatsApp. En attendant, tu peux rejoindre la communauté.</p>';
+      box.className = 'application-success ipress-success';
+      box.setAttribute('role', 'region');
+      box.setAttribute('aria-labelledby', 'success-title');
+      box.setAttribute('tabindex', '-1');
+      box.innerHTML = `
+        <div class="success-rail"><span class="mono">IPRESS × TOI</span><span class="success-state"><i aria-hidden="true"></i> CANDIDATURE TRANSMISE</span></div>
+        <div class="success-content">
+          <div class="success-emblem" aria-hidden="true">
+            <span class="success-orbit"></span>
+            <svg viewBox="0 0 80 80" fill="none"><circle class="success-ring" cx="40" cy="40" r="34"/><path class="success-tick" d="M24 40.5 35 51 57 29"/></svg>
+            <span class="success-spark spark-one">✳</span><span class="success-spark spark-two">✦</span>
+          </div>
+          <div class="success-copy" role="status" aria-live="polite" aria-atomic="true">
+            <span class="success-kicker mono">UNE NOUVELLE HISTOIRE S’OUVRE.</span>
+            <h4 id="success-title">Merci, ta candidature<br>est <em>envoyée.</em></h4>
+            <p>L’équipe IPRESS va découvrir ton profil et te contactera sur WhatsApp. En attendant, tu peux rejoindre la communauté.</p>
+          </div>
+          <div class="success-next"><span class="success-next-number mono">À SUIVRE ↗</span><p>Ta créativité a sa place dans la conversation.<br><span>L’adhésion sera confirmée par l’équipe.</span></p></div>
+          <div class="success-actions"><a class="primary-button" href="https://chat.whatsapp.com/GarYt66WwYnEFJseaH64WM?s=cl&amp;p=a&amp;mlu=4&amp;ilr=4" target="_blank" rel="noopener noreferrer">Rejoindre la communauté <span aria-hidden="true">↗</span></a><a class="text-link" href="#moments">Continuer l’exploration <span aria-hidden="true">→</span></a></div>
+        </div>
+        <div class="success-signature mono"><span>TON REGARD. NOTRE PROCHAINE HISTOIRE.</span><span aria-hidden="true">✳</span></div>`;
+      form.removeAttribute('aria-busy');
       form.replaceWith(box);
       opener.hidden = true;
+      box.focus({ preventScroll: true });
       box.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'nearest' });
     } catch (error) {
       showStatus('Ta candidature n’a pas pu être envoyée. Vérifie ta connexion et réessaie dans un instant.', true);
+      form.removeAttribute('aria-busy');
       submit.disabled = false;
       label.textContent = original;
     }

@@ -1,0 +1,16 @@
+/* Media additions only: original site rules stay unchanged. */
+.discipline-original-photo{display:block;position:relative;width:min(100%,280px);margin-top:22px;padding:8px;background:#fff;border:1px solid var(--line);border-radius:2px;box-shadow:0 9px 22px #18221c16;transition:box-shadow .35s var(--ease)}
+.discipline-original-photo img{display:block;width:100%;height:auto;object-fit:contain}
+.discipline-original-photo:hover,.discipline-original-photo:focus-visible{box-shadow:0 15px 28px #18221c25}
+.media-photo-open{position:absolute;right:15px;bottom:15px;display:grid;place-items:center;width:29px;height:29px;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--blue);font-size:19px;line-height:1;pointer-events:none}
+.media-memory{padding:11px;align-self:center;position:relative}
+.media-memory img{height:auto!important;width:100%;object-fit:contain!important;display:block}
+.media-memory-tall{width:285px}.media-memory-square{width:340px}.media-memory-wide{width:430px}
+.media-memory:nth-child(3n){transform:rotate(-3deg)}.media-memory:nth-child(3n + 1){transform:rotate(3deg)}.media-memory:nth-child(3n + 2){transform:rotate(-2deg)}
+.media-memory:hover,.media-memory:focus-visible{transform:rotate(0) translateY(-10px)}
+.ipress-film{padding:10px;background:#fff;border:1px solid var(--line);box-shadow:0 14px 36px #18221c12;border-radius:3px;margin-top:38px;overflow:hidden}
+.ipress-film video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#101615;border-radius:1px}
+@media(max-width:800px){.media-memory-tall{width:250px}.media-memory-square{width:300px}.media-memory-wide{width:360px}}
+@media(max-width:560px){.discipline-original-photo{width:min(100%,300px);padding:7px}.media-memory-tall{width:min(70vw,260px)}.media-memory-square{width:min(78vw,300px)}.media-memory-wide{width:min(84vw,340px)}.ipress-film{padding:5px;margin-top:25px}}
+@media(prefers-reduced-motion:reduce){.discipline-original-photo,.media-memory{transition:none}}
+.reduce-motion .discipline-original-photo,.reduce-motion .media-memory{transition:none}
